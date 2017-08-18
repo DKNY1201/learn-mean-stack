@@ -5,4 +5,8 @@ router.get('/', function (req, res, next) {
     res.render('index');
 });
 
+router.get('/message', function (req, res, next) {
+    res.render('node', { message: 'hello world'});
+});
+
 module.exports = router;
