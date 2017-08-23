@@ -6,5 +6,4 @@ var schema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User'} // Refer to User table by user ID
 });
 
-
 module.exports = mongoose.model('Message', schema);
