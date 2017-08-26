@@ -18,6 +18,11 @@ export class MessageListComponent {
     messages: Message[];
 
     constructor(private messageService: MessageService) {
-        this.messages = messageService.getMessages();
+        this.messageService.getMessages()
+            .subscribe(
+                (messages: Message[]) => {
+                    this.messages = messages;
+                }
+            );
     }
 }
