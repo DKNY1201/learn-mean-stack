@@ -22,6 +22,7 @@ var signin_component_1 = require("./auth/signin.component");
 var signup_component_1 = require("./auth/signup.component");
 var logout_component_1 = require("./auth/logout.component");
 var auth_service_1 = require("./auth/auth.service");
+var error_component_1 = require("./errors/error.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -37,7 +38,8 @@ var AppModule = (function () {
                 header_component_1.HeaderComponent,
                 signin_component_1.SigninComponent,
                 signup_component_1.SignupComponent,
-                logout_component_1.LogoutComponent
+                logout_component_1.LogoutComponent,
+                error_component_1.ErrorComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
