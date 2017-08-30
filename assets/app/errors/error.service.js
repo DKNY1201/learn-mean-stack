@@ -7,7 +7,7 @@ var ErrorService = (function () {
         this.errorOccurred = new core_1.EventEmitter();
     }
     ErrorService.prototype.handleError = function (error) {
-        var errorData = new error_model_1.Error(error.title, error.message);
+        var errorData = new error_model_1.Error(error.title, error.error.message);
         this.errorOccurred.emit(errorData);
     };
     return ErrorService;

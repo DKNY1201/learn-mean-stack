@@ -14,9 +14,11 @@ var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/Rx");
 var message_model_1 = require("./message.model");
+var error_service_1 = require("../errors/error.service");
 var MessageService = (function () {
-    function MessageService(http) {
+    function MessageService(http, errorService) {
         this.http = http;
+        this.errorService = errorService;
         this.messages = [];
         this.messageIsEdit = new core_1.EventEmitter();
         this.serverUrl = 'http://localhost:3200/message';
@@ -35,7 +37,10 @@ var MessageService = (function () {
             _this.messages.push(message);
             return message;
         })
-            .catch(function (error) { return Observable_1.Observable.throw(error.json()); });
+            .catch(function (error) {
+            _this.errorService.handleError(error.json());
+            return Observable_1.Observable.throw(error.json());
+        });
     };
     MessageService.prototype.getMessages = function () {
         var _this = this;
@@ -50,12 +55,16 @@ var MessageService = (function () {
             _this.messages = transformedMessages;
             return transformedMessages;
         })
-            .catch(function (error) { return Observable_1.Observable.throw(error.json()); });
+            .catch(function (error) {
+            _this.errorService.handleError(error.json());
+            return Observable_1.Observable.throw(error.json());
+        });
     };
     MessageService.prototype.editMessage = function (message) {
         this.messageIsEdit.emit(message);
     };
     MessageService.prototype.updateMessage = function (message) {
+        var _this = this;
         var body = JSON.stringify(message);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var token = localStorage.getItem('token')
@@ -63,20 +72,27 @@ var MessageService = (function () {
             : '';
         return this.http.patch(this.serverUrl + '/' + message.messageId + token, body, { headers: headers })
             .map(function (response) { return response.json(); })
-            .catch(function (error) { return Observable_1.Observable.throw(error.json()); });
+            .catch(function (error) {
+            _this.errorService.handleError(error.json());
+            return Observable_1.Observable.throw(error.json());
+        });
     };
     MessageService.prototype.deleteMessage = function (message) {
+        var _this = this;
         this.messages.splice(this.messages.indexOf(message), 1);
         var token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
         return this.http.delete(this.serverUrl + '/' + message.messageId + token)
             .map(function (response) { return response.json(); })
-            .catch(function (error) { return Observable_1.Observable.throw(error.json()); });
+            .catch(function (error) {
+            _this.errorService.handleError(error.json());
+            return Observable_1.Observable.throw(error.json());
+        });
     };
     MessageService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.Http])
+        __metadata("design:paramtypes", [http_1.Http, error_service_1.ErrorService])
     ], MessageService);
     return MessageService;
 }());

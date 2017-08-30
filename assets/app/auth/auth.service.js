@@ -13,24 +13,34 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/Rx");
 var Observable_1 = require("rxjs/Observable");
+var error_service_1 = require("../errors/error.service");
 var AuthService = (function () {
-    function AuthService(http) {
+    function AuthService(http, errorService) {
         this.http = http;
+        this.errorService = errorService;
         this.serverUrl = 'http://localhost:3200/user';
     }
     AuthService.prototype.signup = function (user) {
+        var _this = this;
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var body = JSON.stringify(user);
         return this.http.post(this.serverUrl, body, { headers: headers })
             .map(function (response) { return response.json(); })
-            .catch(function (error) { return Observable_1.Observable.throw(error.json()); });
+            .catch(function (error) {
+            _this.errorService.handleError(error.json());
+            return Observable_1.Observable.throw(error.json());
+        });
     };
     AuthService.prototype.signin = function (user) {
+        var _this = this;
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var body = JSON.stringify(user);
         return this.http.post(this.serverUrl + '/signin', body, { headers: headers })
             .map(function (response) { return response.json(); })
-            .catch(function (error) { return Observable_1.Observable.throw(error.json()); });
+            .catch(function (error) {
+            _this.errorService.handleError(error.json());
+            return Observable_1.Observable.throw(error.json());
+        });
     };
     AuthService.prototype.logout = function () {
         localStorage.clear();
@@ -40,7 +50,7 @@ var AuthService = (function () {
     };
     AuthService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.Http])
+        __metadata("design:paramtypes", [http_1.Http, error_service_1.ErrorService])
     ], AuthService);
     return AuthService;
 }());
