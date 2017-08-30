@@ -52,7 +52,7 @@ export class MessageService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.patch(this.serverUrl + message.messageId + token, body, {headers: headers})
+        return this.http.patch(this.serverUrl + '/' + message.messageId + token, body, {headers: headers})
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
     }
@@ -62,7 +62,7 @@ export class MessageService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.delete(this.serverUrl + message.messageId + token)
+        return this.http.delete(this.serverUrl + '/' + message.messageId + token)
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
     }

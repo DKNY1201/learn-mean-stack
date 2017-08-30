@@ -66,13 +66,11 @@ router.post('/', function (req, res, next) {
             });
         });
     })
-
-
-
 });
 
 router.patch('/:id', function (req, res, next) {
     Message.findById(req.params.id, function (err, message) {
+        var decoded = jwt.decode(req.query.token);
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred',
@@ -84,6 +82,13 @@ router.patch('/:id', function (req, res, next) {
             return res.status(500).json({
                 title: 'No Message Found!',
                 error: {message: 'Message not found'}
+            });
+        }
+
+        if (message.user != decoded.user._id) {
+            return res.status(401).json({
+                title: 'Users do not match',
+                error: {message: 'Users do not match'}
             });
         }
 
@@ -106,6 +111,7 @@ router.patch('/:id', function (req, res, next) {
 
 router.delete('/:id', function (req, res, next) {
     Message.findById(req.params.id, function (err, message) {
+        var decoded = jwt.decode(req.query.token);
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred',
@@ -117,6 +123,13 @@ router.delete('/:id', function (req, res, next) {
             return res.status(500).json({
                 title: 'No Message Found!',
                 error: {message: 'Message not found'}
+            });
+        }
+
+        if (message.user != decoded.user._id) {
+            return res.status(401).json({
+                title: 'Users do not match',
+                error: {message: 'Users do not match'}
             });
         }
 
