@@ -22,6 +22,9 @@ var MessageComponent = (function () {
     MessageComponent.prototype.onDelete = function () {
         this.messageService.deleteMessage(this.message).subscribe(function (result) { return console.log(result); });
     };
+    MessageComponent.prototype.isBelongsToCurrentUser = function () {
+        return localStorage.getItem('userId') == this.message.userId;
+    };
     __decorate([
         core_1.Input('inputMessage'),
         __metadata("design:type", message_model_1.Message)

@@ -34,4 +34,8 @@ export class MessageComponent {
             result => console.log(result)
         );
     }
+
+    isBelongsToCurrentUser() {
+        return localStorage.getItem('userId') == this.message.userId;
+    }
 }
