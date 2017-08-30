@@ -23,6 +23,7 @@ var signup_component_1 = require("./auth/signup.component");
 var logout_component_1 = require("./auth/logout.component");
 var auth_service_1 = require("./auth/auth.service");
 var error_component_1 = require("./errors/error.component");
+var error_service_1 = require("./errors/error.service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -48,7 +49,7 @@ var AppModule = (function () {
                 forms_1.ReactiveFormsModule,
                 http_1.HttpModule
             ],
-            providers: [auth_service_1.AuthService],
+            providers: [auth_service_1.AuthService, error_service_1.ErrorService],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
