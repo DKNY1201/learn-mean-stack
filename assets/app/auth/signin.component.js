@@ -11,23 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
-var auth_service_1 = require("./auth.service");
-var user_model_1 = require("./user.model");
 var router_1 = require("@angular/router");
+var user_model_1 = require("./user.model");
+var auth_service_1 = require("./auth.service");
 var SigninComponent = (function () {
     function SigninComponent(authService, router) {
         this.authService = authService;
         this.router = router;
     }
-    SigninComponent.prototype.ngOnInit = function () {
-        this.myForm = new forms_1.FormGroup({
-            email: new forms_1.FormControl(null, [
-                forms_1.Validators.required,
-                forms_1.Validators.email
-            ]),
-            password: new forms_1.FormControl(null, forms_1.Validators.required)
-        });
-    };
     SigninComponent.prototype.onSubmit = function () {
         var _this = this;
         var user = new user_model_1.User(this.myForm.value.email, this.myForm.value.password);
@@ -37,6 +28,16 @@ var SigninComponent = (function () {
             localStorage.setItem('userId', data.userId);
             _this.router.navigateByUrl('/');
         }, function (error) { return console.error(error); });
+        this.myForm.reset();
+    };
+    SigninComponent.prototype.ngOnInit = function () {
+        this.myForm = new forms_1.FormGroup({
+            email: new forms_1.FormControl(null, [
+                forms_1.Validators.required,
+                forms_1.Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+            ]),
+            password: new forms_1.FormControl(null, forms_1.Validators.required)
+        });
     };
     SigninComponent = __decorate([
         core_1.Component({

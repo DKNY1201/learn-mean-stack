@@ -13,17 +13,19 @@ var core_1 = require("@angular/core");
 var message_service_1 = require("./message.service");
 var MessageListComponent = (function () {
     function MessageListComponent(messageService) {
-        var _this = this;
         this.messageService = messageService;
+    }
+    MessageListComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.messageService.getMessages()
             .subscribe(function (messages) {
             _this.messages = messages;
         });
-    }
+    };
     MessageListComponent = __decorate([
         core_1.Component({
             selector: 'app-message-list',
-            template: "\n        <div class=\"col-md-8 col-md-offset-2\">\n            <app-message\n                    [inputMessage]=\"message\"\n                    *ngFor=\"let message of messages\"\n            ></app-message>\n        </div>\n    "
+            template: "\n        <div class=\"col-md-8 col-md-offset-2\">\n            <app-message\n                   [message]=\"message\"\n                    *ngFor=\"let message of messages\"></app-message>\n        </div>\n    "
         }),
         __metadata("design:paramtypes", [message_service_1.MessageService])
     ], MessageListComponent);

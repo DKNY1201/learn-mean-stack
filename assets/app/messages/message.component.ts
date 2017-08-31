@@ -1,6 +1,7 @@
-import {Component, Input} from "@angular/core";
-import {Message} from "./message.model";
-import {MessageService} from "./message.service";
+import { Component, Input } from "@angular/core";
+
+import { Message } from "./message.model";
+import { MessageService } from "./message.service";
 
 @Component({
     selector: 'app-message',
@@ -21,7 +22,7 @@ import {MessageService} from "./message.service";
     `]
 })
 export class MessageComponent {
-    @Input('inputMessage') message: Message;
+    @Input() message: Message;
 
     constructor(private messageService: MessageService) {}
 
@@ -30,12 +31,13 @@ export class MessageComponent {
     }
 
     onDelete() {
-        this.messageService.deleteMessage(this.message).subscribe(
-            result => console.log(result)
-        );
+        this.messageService.deleteMessage(this.message)
+            .subscribe(
+                result => console.log(result)
+            );
     }
 
-    isBelongsToCurrentUser() {
+    belongsToUser() {
         return localStorage.getItem('userId') == this.message.userId;
     }
 }

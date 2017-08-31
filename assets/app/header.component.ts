@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
     selector: 'app-header',
@@ -13,4 +13,6 @@ import {Component} from "@angular/core";
         </header>
     `
 })
-export class HeaderComponent{}
+export class HeaderComponent {
+
+}

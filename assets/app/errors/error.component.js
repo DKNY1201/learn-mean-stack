@@ -21,7 +21,8 @@ var ErrorComponent = (function () {
     };
     ErrorComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.errorService.errorOccurred.subscribe(function (error) {
+        this.errorService.errorOccurred
+            .subscribe(function (error) {
             _this.error = error;
             _this.display = 'block';
         });

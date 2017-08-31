@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var auth_service_1 = require("./auth.service");
 var router_1 = require("@angular/router");
+var auth_service_1 = require("./auth.service");
 var LogoutComponent = (function () {
     function LogoutComponent(authService, router) {
         this.authService = authService;

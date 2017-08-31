@@ -17,22 +17,22 @@ var SignupComponent = (function () {
     function SignupComponent(authService) {
         this.authService = authService;
     }
+    SignupComponent.prototype.onSubmit = function () {
+        var user = new user_model_1.User(this.myForm.value.email, this.myForm.value.password, this.myForm.value.firstName, this.myForm.value.lastName);
+        this.authService.signup(user)
+            .subscribe(function (data) { return console.log(data); }, function (error) { return console.error(error); });
+        this.myForm.reset();
+    };
     SignupComponent.prototype.ngOnInit = function () {
         this.myForm = new forms_1.FormGroup({
             firstName: new forms_1.FormControl(null, forms_1.Validators.required),
             lastName: new forms_1.FormControl(null, forms_1.Validators.required),
             email: new forms_1.FormControl(null, [
                 forms_1.Validators.required,
-                forms_1.Validators.email
+                forms_1.Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
             ]),
             password: new forms_1.FormControl(null, forms_1.Validators.required)
         });
-    };
-    SignupComponent.prototype.onSubmit = function () {
-        var user = new user_model_1.User(this.myForm.value.email, this.myForm.value.password, this.myForm.value.firstName, this.myForm.value.lastName);
-        this.authService.signup(user)
-            .subscribe(function (data) { return console.log(data); }, function (error) { return console.error(error); });
-        this.myForm.reset();
     };
     SignupComponent = __decorate([
         core_1.Component({

@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
     selector: 'app-messages',
@@ -12,4 +12,6 @@ import {Component} from "@angular/core";
         </div>
     `
 })
-export class MessagesComponent {}
+export class MessagesComponent {
+
+}

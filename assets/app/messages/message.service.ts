@@ -1,17 +1,19 @@
-import {Http, Response, Headers} from "@angular/http";
-import {EventEmitter, Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
+import { Http, Response, Headers } from "@angular/http";
+import { Injectable, EventEmitter } from "@angular/core";
 import 'rxjs/Rx';
+import { Observable } from "rxjs";
 
-import {Message} from "./message.model";
-import {ErrorService} from "../errors/error.service";
+import { Message } from "./message.model";
+import { ErrorService } from "../errors/error.service";
 
 @Injectable()
 export class MessageService {
-    messages: Message[] = [];
+    serverUrl = 'http://localhost:3100';
+    private messages: Message[] = [];
     messageIsEdit = new EventEmitter<Message>();
-    serverUrl = 'http://localhost:3200/message';
-    constructor(private http: Http, private errorService: ErrorService){}
+
+    constructor(private http: Http, private errorService: ErrorService) {
+    }
 
     addMessage(message: Message) {
         const body = JSON.stringify(message);
@@ -19,10 +21,11 @@ export class MessageService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.post(this.serverUrl + token, body, {headers: headers})
+        return this.http.post(this.serverUrl + '/message' + token, body, {headers: headers})
             .map((response: Response) => {
                 const result = response.json();
-                const message = new Message(result.obj.content,
+                const message = new Message(
+                    result.obj.content,
                     result.obj.user.firstName,
                     result.obj._id,
                     result.obj.user._id);
@@ -36,15 +39,17 @@ export class MessageService {
     }
 
     getMessages() {
-        return this.http.get(this.serverUrl)
+        return this.http.get(this.serverUrl + '/message')
             .map((response: Response) => {
                 const messages = response.json().obj;
                 let transformedMessages: Message[] = [];
                 for (let message of messages) {
-                    transformedMessages.push(new Message(message.content,
+                    transformedMessages.push(new Message(
+                        message.content,
                         message.user.firstName,
                         message._id,
-                        message.user._id));
+                        message.user._id)
+                    );
                 }
                 this.messages = transformedMessages;
                 return transformedMessages;
@@ -65,7 +70,7 @@ export class MessageService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.patch(this.serverUrl + '/' + message.messageId + token, body, {headers: headers})
+        return this.http.patch(this.serverUrl + '/message/' + message.messageId + token, body, {headers: headers})
             .map((response: Response) => response.json())
             .catch((error: Response) => {
                 this.errorService.handleError(error.json());
@@ -78,7 +83,7 @@ export class MessageService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.delete(this.serverUrl + '/' + message.messageId + token)
+        return this.http.delete(this.serverUrl + '/message/' + message.messageId + token)
             .map((response: Response) => response.json())
             .catch((error: Response) => {
                 this.errorService.handleError(error.json());

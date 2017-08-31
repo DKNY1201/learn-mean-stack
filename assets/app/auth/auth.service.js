@@ -12,34 +12,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/Rx");
-var Observable_1 = require("rxjs/Observable");
+var rxjs_1 = require("rxjs");
 var error_service_1 = require("../errors/error.service");
 var AuthService = (function () {
     function AuthService(http, errorService) {
         this.http = http;
         this.errorService = errorService;
-        this.serverUrl = 'http://localhost:3200/user';
+        this.serverUrl = 'http://localhost:3100';
     }
     AuthService.prototype.signup = function (user) {
         var _this = this;
-        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var body = JSON.stringify(user);
-        return this.http.post(this.serverUrl, body, { headers: headers })
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        return this.http.post(this.serverUrl + '/user', body, { headers: headers })
             .map(function (response) { return response.json(); })
             .catch(function (error) {
             _this.errorService.handleError(error.json());
-            return Observable_1.Observable.throw(error.json());
+            return rxjs_1.Observable.throw(error.json());
         });
     };
     AuthService.prototype.signin = function (user) {
         var _this = this;
-        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var body = JSON.stringify(user);
-        return this.http.post(this.serverUrl + '/signin', body, { headers: headers })
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        return this.http.post(this.serverUrl + '/user/signin', body, { headers: headers })
             .map(function (response) { return response.json(); })
             .catch(function (error) {
             _this.errorService.handleError(error.json());
-            return Observable_1.Observable.throw(error.json());
+            return rxjs_1.Observable.throw(error.json());
         });
     };
     AuthService.prototype.logout = function () {
