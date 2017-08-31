@@ -7,15 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var message_service_1 = require("./messages/message.service");
 var AppComponent = (function () {
     function AppComponent() {
     }
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            templateUrl: './app.component.html',
-            providers: [message_service_1.MessageService]
+            templateUrl: './app.component.html'
         })
     ], AppComponent);
     return AppComponent;

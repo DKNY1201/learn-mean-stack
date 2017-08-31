@@ -11,10 +11,6 @@ var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
 var app_component_1 = require("./app.component");
-var message_component_1 = require("./messages/message.component");
-var message_list_component_1 = require("./messages/message-list.component");
-var message_input_component_1 = require("./messages/message-input.component");
-var messages_component_1 = require("./messages/messages.component");
 var authentication_component_1 = require("./auth/authentication.component");
 var header_component_1 = require("./header.component");
 var app_routing_1 = require("./app.routing");
@@ -24,6 +20,7 @@ var signin_component_1 = require("./auth/signin.component");
 var auth_service_1 = require("./auth/auth.service");
 var error_component_1 = require("./errors/error.component");
 var error_service_1 = require("./errors/error.service");
+var message_module_1 = require("./messages/message.module");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -31,10 +28,6 @@ var AppModule = (function () {
         core_1.NgModule({
             declarations: [
                 app_component_1.AppComponent,
-                message_component_1.MessageComponent,
-                message_list_component_1.MessageListComponent,
-                message_input_component_1.MessageInputComponent,
-                messages_component_1.MessagesComponent,
                 authentication_component_1.AuthenticationComponent,
                 header_component_1.HeaderComponent,
                 logout_component_1.LogoutComponent,
@@ -44,10 +37,10 @@ var AppModule = (function () {
             ],
             imports: [
                 platform_browser_1.BrowserModule,
-                forms_1.FormsModule,
                 app_routing_1.routing,
                 forms_1.ReactiveFormsModule,
-                http_1.HttpModule
+                http_1.HttpModule,
+                message_module_1.MessageModule
             ],
             providers: [auth_service_1.AuthService, error_service_1.ErrorService],
             bootstrap: [app_component_1.AppComponent]

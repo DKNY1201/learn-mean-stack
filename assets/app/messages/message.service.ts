@@ -8,7 +8,6 @@ import { ErrorService } from "../errors/error.service";
 
 @Injectable()
 export class MessageService {
-    serverUrl = 'http://localhost:3100';
     private messages: Message[] = [];
     messageIsEdit = new EventEmitter<Message>();
 
@@ -21,7 +20,7 @@ export class MessageService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.post(this.serverUrl + '/message' + token, body, {headers: headers})
+        return this.http.post('http://localhost:3500/message' + token, body, {headers: headers})
             .map((response: Response) => {
                 const result = response.json();
                 const message = new Message(
@@ -39,7 +38,7 @@ export class MessageService {
     }
 
     getMessages() {
-        return this.http.get(this.serverUrl + '/message')
+        return this.http.get('http://localhost:3500/message')
             .map((response: Response) => {
                 const messages = response.json().obj;
                 let transformedMessages: Message[] = [];
@@ -70,7 +69,7 @@ export class MessageService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.patch(this.serverUrl + '/message/' + message.messageId + token, body, {headers: headers})
+        return this.http.patch('http://localhost:3500/message/' + message.messageId + token, body, {headers: headers})
             .map((response: Response) => response.json())
             .catch((error: Response) => {
                 this.errorService.handleError(error.json());
@@ -83,7 +82,7 @@ export class MessageService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.delete(this.serverUrl + '/message/' + message.messageId + token)
+        return this.http.delete('http://localhost:3500/message/' + message.messageId + token)
             .map((response: Response) => response.json())
             .catch((error: Response) => {
                 this.errorService.handleError(error.json());

@@ -18,13 +18,12 @@ var AuthService = (function () {
     function AuthService(http, errorService) {
         this.http = http;
         this.errorService = errorService;
-        this.serverUrl = 'http://localhost:3100';
     }
     AuthService.prototype.signup = function (user) {
         var _this = this;
         var body = JSON.stringify(user);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-        return this.http.post(this.serverUrl + '/user', body, { headers: headers })
+        return this.http.post('http://localhost:3500/user', body, { headers: headers })
             .map(function (response) { return response.json(); })
             .catch(function (error) {
             _this.errorService.handleError(error.json());
@@ -35,7 +34,7 @@ var AuthService = (function () {
         var _this = this;
         var body = JSON.stringify(user);
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-        return this.http.post(this.serverUrl + '/user/signin', body, { headers: headers })
+        return this.http.post('http://localhost:3500/user/signin', body, { headers: headers })
             .map(function (response) { return response.json(); })
             .catch(function (error) {
             _this.errorService.handleError(error.json());
